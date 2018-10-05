@@ -1,0 +1,39 @@
+const puppeteer = require('puppeteer')
+
+const getData = async () => {
+  // 1 - Créer une instance de navigateur
+  const browser = await puppeteer.launch({ headless: false })
+  const page = await browser.newPage()
+  const url = "https://www.unibet.fr/sport/tennis";
+  // 2 - Naviguer jusqu'à l'URL cible
+  await page.goto("https://www.unibet.fr/sport/tennis/event/gasquet-r-kudla-d-1293294_1.html")
+  await page.waitFor('body');
+  await page.waitFor(3000) // fait une pause d'une seconde
+
+ // await page.click( "#view-main > div.view.view-eventpath.effeckt-page-active > div > div.scroller > div > div.ui-splitview-item.ui-splitview-left > div > div.c-eventpathlist.bettingbox > div.ui-mainview-block.eventpath-wrapper.togglemore.hide-icons > div:nth-child(1) > div > div:nth-child(1) > div.cell-meta.table-cell > div > div.cell-desc.table-cell > div.cell-extra" );
+
+/*
+  // 3 - Récupérer les données
+  const result = await page.evaluate(() => {
+    let title = document.querySelector('h2').innerText
+    const prices = Array.from( document.querySelectorAll( '.price' ), element => element.textContent );
+    //price = document.querySelector('.price').innerText
+    return [title]
+  })
+*/
+
+  const result = await page.evaluate(() => {
+    let title = document.querySelector('h2').innerText
+    //const prices = Array.from( document.querySelectorAll( '.price' ), element => element.textContent );
+    return [title];
+  })
+
+  // 4 - Retourner les données (et fermer le navigateur)
+  browser.close()
+  return result
+}
+
+ //Appelle la fonction getData() et affichage les données retournées
+getData().then(value => {
+  console.log(value)
+})
