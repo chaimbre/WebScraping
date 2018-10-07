@@ -12,7 +12,7 @@ const getData = async () =>
   const is_headless = args[1]
   const url = args[0]
 
-  const browser = await puppeteer.launch( {executablePath: utils.CHROME_PATH_64, headless: is_headless })
+  const browser = await puppeteer.launch( {executablePath: utils.CHROME_PATH_64, headless: false })
   const result = await getFromLink( browser, url )
   
   browser.close()
